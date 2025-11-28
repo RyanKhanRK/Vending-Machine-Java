@@ -4,7 +4,7 @@ This repository contains a Java implementation of a simple vending machine syste
 The project includes features such as handling money, selecting products, and managing inventory.
 
 ## 📌 Project Structure
-- `VendingMachineWithMoney.java` — the original version  
+- `oldvendingmachine.java` — the original version  
 - New version will be added soon  
 - `.gitignore` included to keep the repo clean  
 
