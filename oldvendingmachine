@@ -1,0 +1,79 @@
+import java.util.Scanner;
+
+public class VendingMachineWithMoney {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Products
+        String[] items = {
+            "Coke", "Water", "Green Tea", "Sprite", "Pepsi", "Oishi Green Tea",
+            "M-150 Energy Drink", "Red Bull", "Nescafé Latte Can", "Milk (Dutch Mill)",
+            "Lay’s Classic", "Lay’s Nori Seaweed", "Taokaenoi Seaweed",
+            "Mama Cup Noodles", "Bread (7-Select Sandwich)", "Sausage Bun",
+            "Yogurt", "Chocolate Bar", "Jelly Cup", "Mineral Water (Large)"
+        };
+
+        int[] prices = {
+            25, 10, 30, 20, 25, 32, 15, 12, 28, 20,
+            30, 30, 25, 18, 27, 28, 25, 20, 12, 15
+        };
+
+        int[] stock = {
+            10, 15, 8, 6, 9, 7, 5, 6, 4, 6,
+            8, 7, 6, 10, 5, 4, 5, 8, 6, 10
+        };
+
+        // Track total money in the machine
+        int totalMoney = 500; // starting money
+
+        while (true) {
+            System.out.println("\n--- VENDING MACHINE ---");
+            for (int i = 0; i < items.length; i++) {
+                System.out.println((i+1) + ". " + items[i] + " - " + prices[i] + " baht (Stock: " + stock[i] + ")");
+            }
+            System.out.println("0. Exit");
+            System.out.println("Machine total money: " + totalMoney + " baht");
+            System.out.print("Select item: ");
+            int choice = sc.nextInt();
+
+            if (choice == 0) break;
+
+            if (choice < 1 || choice > items.length) {
+                System.out.println("Invalid selection!");
+                continue;
+            }
+
+            if (stock[choice-1] <= 0) {
+                System.out.println("Sorry, this item is out of stock!");
+                continue;
+            }
+
+            System.out.print("Insert money: ");
+            int money = sc.nextInt();
+
+            if (money < prices[choice-1]) {
+                System.out.println("Not enough money!");
+                continue;
+            }
+
+            int change = money - prices[choice-1];
+
+            // Check if machine has enough money to give change
+            if (change > totalMoney) {
+                System.out.println("Machine does not have enough money for change. Please insert exact amount.");
+                continue;
+            }
+
+            // FIX: Add full inserted money, then subtract change
+            totalMoney += money; // machine receives the full inserted money
+            totalMoney -= change; // give back the change
+
+            System.out.println("Dispensed: " + items[choice-1]);
+            System.out.println("Change returned: " + change + " baht");
+
+            stock[choice-1]--;
+        }
+
+        System.out.println("Thanks for using the vending machine!");
+    }
+}
